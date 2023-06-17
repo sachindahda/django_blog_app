@@ -1,5 +1,6 @@
-my_env
-data
 mysite/blog/__pycache__/
 mysite/mysite/__pycache__/
 mysite/blog/migrations/__pycache__/
+my_env
+data
+.env
