@@ -55,24 +55,28 @@ def post_detail(request, year, month, day,post ):
     comments=post.comments.filter(active=True)
     # Form for users to comment
 
+    print(post.tags.all())
     tags=post.tags.all().values()
+    # tags=post.tags.all().values('name')
+
     print(f'tags_{tags}')
     
     tags_list=post.tags.all().values_list()
     print(f'tags_list_{tags_list}')
 
+    print(post.tags.values_list('id'))
     post_tags_ids = post.tags.values_list('id', flat=True)
     print(f'post_tags_ids_{post_tags_ids}')
     
     print(f'post_   {post.id}')
 
-    similar_posts=Post.published.filter(tags__in=post.tags.all()).exclude(id=post.id)
+    similar_posts=Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
     print(f'similar_posts_{similar_posts}')
     print(f'similar_posts_query_{similar_posts.query}')
 
     similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags','-publish')[:4]
     print(f'similar_posts_{similar_posts.values()}')
-    # print(f'similar_posts_query_{similar_posts.query}')
+    print(f'similar_posts_query_{similar_posts.query}')
 
     form=CommentForm()
     context={'post': post,'comments': comments,'form': form,'similar_posts':similar_posts}

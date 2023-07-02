@@ -1,17 +1,27 @@
 {% extends "blog/base.html" %}
+{% load blog_tags %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
   <h1>{{ post.title }}</h1>
   <p class="date">
   Published {{ post.publish }} by {{ post.author }}
   </p>
-  {{ post.body|linebreaks }}
+  {{ post.body|markdown }}
   <p>
   <a href="{% url "blog:post_share" post.id %}">
     Share this post
   </a>
-  <h2>Similar posts</h2>
   </p>
+  <p class="tags">
+    Tags:
+    {% for single in post.tags.all %}
+      <a href="{% url "blog:post_list_by_tag" single.slug %}">
+        {{single.name}}
+      </a>
+      {% if not forloop.last %}, {% endif %}
+    {% endfor%}
+  </p>
+  <h2>Similar posts</h2>
   {% for single_related_post in similar_posts %}
     <p>
       <a href="{{ single_related_post.get_absolute_url }}">{{single_related_post.title}}</a>

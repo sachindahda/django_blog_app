@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+import dotenv,os
+dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
 
 # Application definition
 
@@ -39,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'blog.apps.BlogConfig'
     "blog",
-    "taggit"
+    "taggit",
+    'django.contrib.sites',
+    'django.contrib.sitemaps'
 ]
 
 MIDDLEWARE = [
@@ -86,9 +91,9 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django-blog-app',
-        'USER': 'root',
-        'PASSWORD': '',
+        'NAME': os.getenv('MYSQL_DATABASE'),
+        'USER': os.getenv('MYSQL_USER'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
         'HOST': 'db',
         'PORT': '3306',
     }
@@ -138,12 +143,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Email server configuration
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'sachindahda.escalon@gmail.com'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER =os.getenv('EMAIL_HOST_USER')
 # 16 digit gmail app password
-EMAIL_HOST_PASSWORD = 'joallihlmahrwwqj'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 
 #If you can’t use an SMTP server, you can tell Django to write emails to the console by adding the following setting to the settings.py file:
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

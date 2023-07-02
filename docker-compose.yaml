@@ -22,9 +22,8 @@ services:
             - MYSQL_DATABASE=${MYSQL_DATABASE}
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-            - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
             # - MYSQL_ALLOW_EMPTY_PASSWORD=true
-            # - MYSQL_ROOT_PASSWORD=123456
         ports:
                 - 3306:${MYSQL_PORT}
         volumes:
